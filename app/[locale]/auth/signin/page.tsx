@@ -73,7 +73,7 @@ export default function SignInPage({
           variant: "destructive",
         });
       } else {
-        router.push(`/en/dashboard`);
+        router.push(`/${locale}/dashboard`);
         router.refresh();
       }
     } catch (error) {

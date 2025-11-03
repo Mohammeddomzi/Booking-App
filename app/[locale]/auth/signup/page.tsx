@@ -79,7 +79,7 @@ export default function SignUpPage({
         description: "Account created successfully",
       });
 
-      router.push(`/en/auth/signin`);
+      router.push(`/${locale}/auth/signin`);
     } catch (error: any) {
       toast({
         title: t("common.error"),
