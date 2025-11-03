@@ -11,6 +11,10 @@ export function generateStaticParams() {
   return [{ locale: "ar" }, { locale: "en" }];
 }
 
+// Force dynamic rendering for all pages
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 export const metadata = {
   title: "Aurora Chalet - إدارة حجوزات الشاليهات والمسابح",
   description: "نظام إدارة حجوزات الشاليهات والمسابح الخاصة",
