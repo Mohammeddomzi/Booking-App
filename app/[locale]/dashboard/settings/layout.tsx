@@ -19,7 +19,7 @@ export default function SettingsLayout({
   const tabs = [
     {
       name: t("organization"),
-      href: `/en/dashboard/settings/organization`,
+      href: `/${locale}/dashboard/settings/organization`,
     },
   ];
 
