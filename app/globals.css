@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 20 60% 96%;
+    --foreground: 26 25% 25%;
+
+    --card: 20 50% 98%;
+    --card-foreground: 26 25% 25%;
+
+    --popover: 20 50% 98%;
+    --popover-foreground: 26 25% 25%;
+
+    --primary: 26 25% 33%;
+    --primary-foreground: 20 60% 96%;
+
+    --secondary: 25 30% 85%;
+    --secondary-foreground: 26 25% 25%;
+
+    --muted: 25 20% 90%;
+    --muted-foreground: 26 25% 45%;
+
+    --accent: 25 30% 88%;
+    --accent-foreground: 26 25% 25%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 20 60% 96%;
+
+    --border: 25 20% 85%;
+    --input: 25 20% 85%;
+    --ring: 26 25% 33%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 224 15% 10%;
+    --foreground: 210 20% 98%;
+
+    --card: 224 15% 12%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 224 15% 12%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 210 40% 60%;
+    --primary-foreground: 224 15% 10%;
+
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 220 15% 18%;
+    --muted-foreground: 215 15% 70%;
+
+    --accent: 220 15% 20%;
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 220 15% 22%;
+    --input: 220 15% 22%;
+    --ring: 210 40% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="rtl"] .rtl\:rotate-180 {
+  transform: rotate(180deg);
+}
+
+/* RTL-specific scrollbar positioning */
+[dir="rtl"] ::-webkit-scrollbar {
+  left: 0;
+  right: auto;
+}
+
+/* RTL flip for transforms */
+@layer utilities {
+  .rtl\:scale-x-flip {
+    transform: scaleX(-1);
+  }
+
+  [dir="rtl"] .rtl\:scale-x-flip {
+    transform: scaleX(-1);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}
+
+/* Print styles */
+@media print {
+  @page {
+    margin: 1cm;
+  }
+
+  body {
+    @apply bg-white text-black;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

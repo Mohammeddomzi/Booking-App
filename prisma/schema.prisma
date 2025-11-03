@@ -1,0 +1,157 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  OWNER
+  MANAGER
+  STAFF
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  PAID
+  CANCELLED
+  NO_SHOW
+  COMPLETED
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String         @unique
+  emailVerified DateTime?
+  password      String
+  image         String?
+  role          Role           @default(STAFF)
+  isActive      Boolean        @default(true)
+  
+  organizationId String?
+  organization   Organization?  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  bookings      Booking[]
+  
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  
+  @@index([organizationId])
+  @@index([email])
+  @@index([isActive])
+}
+
+model Organization {
+  id                String             @id @default(cuid())
+  name              String
+  slug              String             @unique
+  isActive          Boolean            @default(true)
+  
+  users             User[]
+  properties        Property[]
+  bookings          Booking[]
+  availability      Availability[]
+  
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  
+  @@index([slug])
+  @@index([isActive])
+}
+
+model Property {
+  id             String         @id @default(cuid())
+  name           String
+  description    String?
+  type           String         @default("CHALET") // CHALET, POOL, etc.
+  defaultPrice   Decimal        @default(0) @db.Decimal(10, 2)
+  currency       String         @default("SAR")
+  slotDuration   Int            @default(60) // minutes
+  
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  bookings       Booking[]
+  availability   Availability[]
+  
+  isActive       Boolean        @default(true)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  
+  @@index([organizationId])
+  @@index([isActive])
+}
+
+model Booking {
+  id             String         @id @default(cuid())
+  
+  // Date and time
+  date           DateTime       @db.Date
+  startTime      String         // HH:MM:SS format
+  endTime        String?        // HH:MM:SS format
+  
+  // Customer info
+  customerName   String
+  customerPhone  String
+  
+  // Financial
+  totalAmount    Decimal        @db.Decimal(10, 2)
+  deposit        Decimal        @default(0) @db.Decimal(10, 2)
+  currency       String         @default("SAR")
+  
+  // Additional info
+  notes          String?        @db.Text
+  receiptUrl     String?
+  
+  status         BookingStatus  @default(PENDING)
+  
+  // Relations
+  propertyId     String
+  property       Property       @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  createdById    String
+  createdBy      User           @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  
+  @@index([organizationId])
+  @@index([propertyId])
+  @@index([date])
+  @@index([status])
+  @@index([createdById])
+}
+
+model Availability {
+  id             String         @id @default(cuid())
+  
+  date           DateTime       @db.Date
+  isOpen         Boolean        @default(true)
+  openTime       String?        // HH:MM:SS format
+  closeTime      String?        // HH:MM:SS format
+  slotDuration   Int?           // override default slot duration in minutes
+  
+  propertyId     String
+  property       Property       @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  
+  @@unique([propertyId, date])
+  @@index([organizationId])
+  @@index([date])
+}
+
