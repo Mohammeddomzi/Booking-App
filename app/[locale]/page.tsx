@@ -10,8 +10,8 @@ export default async function HomePage({
   const session = await getServerSession(authOptions);
   
   if (session) {
-    redirect(`/en/dashboard`);
+    redirect(`/${locale}/dashboard`);
   }
   
-  redirect(`/en/auth/signup`);
+  redirect(`/${locale}/auth/signup`);
 }

@@ -7,10 +7,6 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
 
-export function generateStaticParams() {
-  return [{ locale: "ar" }, { locale: "en" }];
-}
-
 // Force dynamic rendering for all pages
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
