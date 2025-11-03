@@ -39,7 +39,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
-      <body className={fontClass}>
+      <body className={fontClass} suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
           <Toaster />

@@ -20,18 +20,20 @@ export function ThemeProvider({
   children,
   defaultTheme = "light",
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme | undefined>(undefined);
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Load theme from localStorage on mount
-    const savedTheme = (localStorage.getItem("theme") as Theme) || defaultTheme;
-    setTheme(savedTheme);
     setMounted(true);
-  }, [defaultTheme]);
+    // Load theme from localStorage on mount
+    const savedTheme = localStorage.getItem("theme") as Theme | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
 
   useEffect(() => {
-    if (!mounted || !theme) return;
+    if (!mounted) return;
     // Apply theme to document
     const root = document.documentElement;
     root.classList.remove("light", "dark");
@@ -42,11 +44,6 @@ export function ThemeProvider({
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
-
-  // Prevent hydration mismatch by not rendering until mounted
-  if (!mounted || !theme) {
-    return <>{children}</>;
-  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
