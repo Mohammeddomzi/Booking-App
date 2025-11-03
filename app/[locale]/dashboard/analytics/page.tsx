@@ -4,19 +4,15 @@ import { prisma } from "@/lib/prisma";
 import { getTranslations } from "next-intl/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
-import { BookingStatus, SubscriptionPlan } from "@prisma/client";
+import { BookingStatus } from "@prisma/client";
 import { startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
 import { BarChart3, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 async function getAnalyticsData(
-  organizationId: string,
-  plan: SubscriptionPlan
+  organizationId: string
 ) {
-  if (plan === SubscriptionPlan.BASIC) {
-    return null; // Pro feature
-  }
 
   const now = new Date();
   const monthStart = startOfMonth(now);
@@ -98,48 +94,7 @@ export default async function AnalyticsPage({
     return <div>Unauthorized</div>;
   }
 
-  const organization = await prisma.organization.findUnique({
-    where: { id: session.user.organizationId },
-  });
-
-  if (!organization) {
-    return <div>Organization not found</div>;
-  }
-
-  const data = await getAnalyticsData(
-    session.user.organizationId,
-    organization.plan
-  );
-
-  if (!data) {
-    return (
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold">{t("analytics.title")}</h1>
-        </div>
-
-        <Card className="border-primary">
-          <CardContent className="pt-6">
-            <div className="text-center space-y-4">
-              <BarChart3 className="h-16 w-16 mx-auto text-primary" />
-              <h3 className="text-xl font-semibold">
-                {t("analytics.upgradeForAnalytics")}
-              </h3>
-              <p className="text-muted-foreground">
-                Upgrade to the Pro plan to access advanced analytics, revenue
-                tracking, and detailed insights.
-              </p>
-              <Link href={`/${locale}/dashboard/settings/billing`}>
-                <Button size="lg" className="mt-4">
-                  {t("settings.upgradeNow")}
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
+  const data = await getAnalyticsData(session.user.organizationId);
 
   return (
     <div className="space-y-6">
