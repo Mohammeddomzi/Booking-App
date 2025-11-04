@@ -11,18 +11,16 @@ const cairo = Cairo({ subsets: ["arabic"], variable: "--font-cairo" });
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 
-export const metadata = {
-  title: "Aurora Chalet - إدارة حجوزات الشاليهات والمسابح",
-  description: "نظام إدارة حجوزات الشاليهات والمسابح الخاصة",
-};
-
 export default async function RootLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  // Await params to avoid hydration issues
+  const { locale } = await params;
+  
   let messages;
   try {
     messages = (await import(`@/messages/${locale}.json`)).default;

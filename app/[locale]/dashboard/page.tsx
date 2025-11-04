@@ -71,10 +71,11 @@ async function getDashboardData(organizationId: string) {
 }
 
 export default async function DashboardPage({
-  params: { locale },
+  params,
 }: {
   params: { locale: string };
 }) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions);
   const t = await getTranslations({ locale });
 

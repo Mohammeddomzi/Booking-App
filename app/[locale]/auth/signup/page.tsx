@@ -18,10 +18,11 @@ import Link from "next/link";
 import { Languages } from "lucide-react";
 
 export default function SignUpPage({
-  params: { locale },
+  params,
 }: {
   params: { locale: string };
 }) {
+  const locale = params.locale;
   const t = useTranslations();
   const router = useRouter();
   const { toast } = useToast();

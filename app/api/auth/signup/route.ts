@@ -4,6 +4,8 @@ import { signUpSchema } from "@/lib/validations";
 import bcrypt from "bcryptjs";
 import { Role } from "@prisma/client";
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();

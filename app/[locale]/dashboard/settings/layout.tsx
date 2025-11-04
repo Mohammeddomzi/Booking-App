@@ -8,11 +8,12 @@ import { Card } from "@/components/ui/card";
 
 export default function SettingsLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  const locale = params.locale;
   const t = useTranslations("settings");
   const pathname = usePathname();
 

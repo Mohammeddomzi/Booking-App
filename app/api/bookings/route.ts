@@ -6,6 +6,8 @@ import { bookingSchema } from "@/lib/validations";
 import { checkTimeOverlap } from "@/lib/utils";
 import { BookingStatus } from "@prisma/client";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: Request) {
   try {
     const session = await getServerSession(authOptions);

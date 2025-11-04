@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
 
-export default function SettingsPage({
-  params: { locale },
+export default async function SettingsPage({
+  params,
 }: {
   params: { locale: string };
 }) {
-  redirect(`/en/dashboard/settings/organization`);
+  const { locale } = await params;
+  redirect(`/${locale}/dashboard/settings/organization`);
 }

@@ -3,10 +3,11 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
 export default async function HomePage({
-  params: { locale },
+  params,
 }: {
   params: { locale: string };
 }) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions);
   
   if (session) {

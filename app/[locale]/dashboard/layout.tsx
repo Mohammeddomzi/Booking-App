@@ -7,11 +7,12 @@ import { SessionProvider } from "@/components/session-provider";
 
 export default async function DashboardLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions);
 
   if (!session) {

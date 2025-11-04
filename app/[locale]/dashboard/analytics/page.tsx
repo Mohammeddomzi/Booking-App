@@ -83,10 +83,11 @@ async function getAnalyticsData(
 }
 
 export default async function AnalyticsPage({
-  params: { locale },
+  params,
 }: {
   params: { locale: string };
 }) {
+  const { locale } = await params;
   const session = await getServerSession(authOptions);
   const t = await getTranslations({ locale });
 
