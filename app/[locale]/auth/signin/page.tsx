@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
-import { Languages, Moon, Sun } from "lucide-react";
+import { Languages } from "lucide-react";
 
 export default function SignInPage({
   params: { locale },
@@ -27,28 +27,10 @@ export default function SignInPage({
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.remove("light", "dark");
-      document.documentElement.classList.add(savedTheme);
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
 
   const toggleLocale = () => {
     const newLocale = locale === "ar" ? "en" : "ar";
@@ -90,12 +72,14 @@ export default function SignInPage({
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background to-secondary relative">
       <div className="absolute top-4 end-4 flex gap-2">
-        <Button variant="outline" size="sm" onClick={toggleLocale} className="gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={toggleLocale}
+          className="gap-2"
+        >
           <Languages className="h-4 w-4" />
           <span className="font-medium">{locale === "ar" ? "EN" : "AR"}</span>
-        </Button>
-        <Button variant="outline" size="icon" onClick={toggleTheme}>
-          {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
         </Button>
       </div>
       <Card className="w-full max-w-md">

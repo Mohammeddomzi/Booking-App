@@ -12,15 +12,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { LogOut, User, Moon, Sun, Languages } from "lucide-react";
+import { LogOut, User, Languages } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "@/components/theme-provider";
 
 export function DashboardHeader({ locale }: { locale: string }) {
   const t = useTranslations();
   const { data: session } = useSession();
   const router = useRouter();
-  const { theme, toggleTheme } = useTheme();
 
   const toggleLocale = () => {
     const newLocale = locale === "ar" ? "en" : "ar";
@@ -60,15 +58,6 @@ export function DashboardHeader({ locale }: { locale: string }) {
             <span className="font-medium">
               {locale === "ar" ? "EN" : "AR"}
             </span>
-          </Button>
-
-          {/* Theme Toggle */}
-          <Button variant="outline" size="icon" onClick={toggleTheme}>
-            {theme === "light" ? (
-              <Moon className="h-5 w-5" />
-            ) : (
-              <Sun className="h-5 w-5" />
-            )}
           </Button>
 
           {/* User Menu */}

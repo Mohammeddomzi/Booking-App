@@ -34,8 +34,8 @@ export default async function RootLayout({
   const fontClass = locale === "ar" ? cairo.variable : inter.variable;
 
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning>
-      <body className={fontClass} suppressHydrationWarning>
+    <html lang={locale} dir={dir}>
+      <body className={fontClass}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
           <Toaster />
