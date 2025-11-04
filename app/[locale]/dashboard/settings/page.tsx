@@ -5,6 +5,6 @@ export default async function SettingsPage({
 }: {
   params: { locale: string };
 }) {
-  const { locale } = await params;
+  const { locale } = params;
   redirect(`/${locale}/dashboard/settings/organization`);
 }

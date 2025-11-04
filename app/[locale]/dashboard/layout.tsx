@@ -12,7 +12,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  const { locale } = await params;
+  const { locale } = params;
   const session = await getServerSession(authOptions);
 
   if (!session) {

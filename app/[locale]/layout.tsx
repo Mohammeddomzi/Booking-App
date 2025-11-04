@@ -18,8 +18,7 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  // Await params to avoid hydration issues
-  const { locale } = await params;
+  const { locale } = params;
   
   let messages;
   try {

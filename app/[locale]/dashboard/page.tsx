@@ -75,7 +75,7 @@ export default async function DashboardPage({
 }: {
   params: { locale: string };
 }) {
-  const { locale } = await params;
+  const { locale } = params;
   const session = await getServerSession(authOptions);
   const t = await getTranslations({ locale });
 

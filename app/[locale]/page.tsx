@@ -7,7 +7,7 @@ export default async function HomePage({
 }: {
   params: { locale: string };
 }) {
-  const { locale } = await params;
+  const { locale } = params;
   const session = await getServerSession(authOptions);
   
   if (session) {

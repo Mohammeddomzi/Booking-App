@@ -18,11 +18,7 @@ import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { Languages } from "lucide-react";
 
-export default function SignInPage({
-  params,
-}: {
-  params: { locale: string };
-}) {
+export default function SignInPage({ params }: { params: { locale: string } }) {
   const locale = params.locale;
   const t = useTranslations();
   const router = useRouter();
